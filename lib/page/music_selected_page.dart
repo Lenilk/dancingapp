@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/components/music_card.dart';
 import 'package:danceteaching/components/videobox.dart';
@@ -8,12 +9,38 @@ import 'package:danceteaching/utils/navitor_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MusicSelectedPage extends StatelessWidget {
+class MusicSelectedPage extends StatefulWidget {
   const MusicSelectedPage({super.key});
+
+  @override
+  State<MusicSelectedPage> createState() => _MusicSelectedPageState();
+}
+
+class _MusicSelectedPageState extends State<MusicSelectedPage> {
+  final player = AudioPlayer();
+  PlayerState playerState = PlayerState.disposed;
+  Future setSourcePlayer(int? musicnumber) async {
+    await player.setReleaseMode(ReleaseMode.stop);
+    await player.setSource(
+      AssetSource('audio/${music_file_list[musicnumber ?? 0]}.m4a'),
+    );
+    player.onPlayerStateChanged.listen((PlayerState s) {
+      debugPrint('Current player state: $s');
+      setState(() => playerState = s);
+    });
+  }
+
+  bool isPlay = false;
+  @override
+  void dispose() {
+    player.release();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     int? musicnumber = context.read<MusicProvider>().musicnumber_selected;
+    setSourcePlayer(musicnumber);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -56,6 +83,7 @@ class MusicSelectedPage extends StatelessWidget {
                     },
                     child: GeneralText(data: 'กลับ'),
                   ),
+                  PlayerControllerButton(player: player, state: playerState),
                   ElevatedButton(
                     onPressed: () {
                       if (Provider.of<MusicProvider>(
@@ -63,10 +91,11 @@ class MusicSelectedPage extends StatelessWidget {
                             listen: false,
                           ).musicnumber_selected !=
                           null) {
+                        goBack(context);
                         goPage(context, RouteName.scoresummarypage);
                       }
                     },
-                    child: GeneralText(data: 'เริ่ม'),
+                    child: GeneralText(data: 'สรุป'),
                   ),
                 ],
               ),
@@ -74,6 +103,38 @@ class MusicSelectedPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PlayerControllerButton extends StatefulWidget {
+  final AudioPlayer player;
+  final PlayerState state;
+  const PlayerControllerButton({
+    super.key,
+    required this.player,
+    required this.state,
+  });
+
+  @override
+  State<PlayerControllerButton> createState() => _PlayerControllerButtonState();
+}
+
+class _PlayerControllerButtonState extends State<PlayerControllerButton> {
+  @override
+  Widget build(BuildContext context) {
+    AudioPlayer player = widget.player;
+    return ElevatedButton(
+      onPressed: () async {
+        if (widget.state == PlayerState.playing) {
+          await player.stop();
+        } else {
+          await player.resume();
+        }
+      },
+      child: widget.state == PlayerState.playing
+          ? GeneralText(data: 'เริ่มใหม่')
+          : GeneralText(data: 'เริ่ม'),
     );
   }
 }

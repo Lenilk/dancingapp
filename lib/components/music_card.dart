@@ -19,11 +19,6 @@ class MusicCard extends StatelessWidget {
                 ? Colors.blue[100]
                 : null,
           ),
-          // foregroundColor: WidgetStatePropertyAll(
-          //   Provider.of<MusicProvider>(context).musicnumber_selected == index
-          //       ? Colors.orangeAccent
-          //       : null,
-          // ),
         ),
         onPressed: () {
           Provider.of<MusicProvider>(context, listen: false).select(index);
