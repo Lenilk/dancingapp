@@ -20,7 +20,22 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              VideoBox(),
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: 90,
+                    minWidth: 60,
+                    maxHeight: 360,
+                    maxWidth: 720,
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Image(
+                      image: AssetImage("assets/picture/home_ico.jpg"),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,6 +53,13 @@ class _HomePageState extends State<HomePage> {
                     child: GeneralText(data: "เลือกเพลง"),
                   ),
                 ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  goPage(context, RouteName.testbeforeplaypage);
+                },
+                child: GeneralText(data: "ทดสอบก่อนเล่น"),
               ),
             ],
           ),
