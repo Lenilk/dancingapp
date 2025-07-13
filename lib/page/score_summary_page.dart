@@ -1,5 +1,6 @@
 import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/components/music_card.dart';
+import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/components/summary_text.dart';
 import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
@@ -26,12 +27,7 @@ class ScoreSummary extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      goBack(context);
-                    },
-                    child: GeneralText(data: 'กลับ'),
-                  ),
+                  goBackButton(null, "กลับ", context),
                   ElevatedButton(
                     onPressed: () {
                       context.read<MusicProvider>().deleteMusicSelect();

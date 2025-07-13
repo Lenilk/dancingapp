@@ -1,5 +1,6 @@
 import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/components/music_card.dart';
+import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
 import 'package:danceteaching/utils/navitor_utils.dart';
@@ -42,15 +43,13 @@ class MusicMainPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Provider.of<MusicProvider>(
-                        context,
-                        listen: false,
-                      ).deleteMusicSelect();
-                      goBack(context);
-                    },
-                    child: GeneralText(data: 'กลับ'),
+                  goBackButton(
+                    () => Provider.of<MusicProvider>(
+                      context,
+                      listen: false,
+                    ).deleteMusicSelect(),
+                    "กลับ",
+                    context,
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -59,10 +58,10 @@ class MusicMainPage extends StatelessWidget {
                             listen: false,
                           ).musicnumber_selected !=
                           null) {
-                        goPage(context, RouteName.musicselectedpage);
+                        goPage(context, RouteName.difficultselectpage);
                       }
                     },
-                    child: GeneralText(data: 'เล่น'),
+                    child: GeneralText(data: 'เลือกความยาก'),
                   ),
                 ],
               ),
