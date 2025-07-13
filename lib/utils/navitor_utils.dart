@@ -1,4 +1,5 @@
 import 'package:danceteaching/page/score_summary_page.dart';
+import 'package:danceteaching/page/test_before_play_page.dart';
 import 'package:flutter/material.dart';
 import 'package:danceteaching/page/page.dart';
 
@@ -18,6 +19,7 @@ enum RouteName {
   musicmainpage,
   tutorialpage,
   scoresummarypage,
+  testbeforeplaypage,
 }
 
 Map<String, Widget Function(BuildContext)> route = {
@@ -26,4 +28,5 @@ Map<String, Widget Function(BuildContext)> route = {
   RouteName.musicmainpage.toString(): (context) => MusicMainPage(),
   RouteName.tutorialpage.toString(): (context) => TutorialPage(),
   RouteName.scoresummarypage.toString(): (context) => ScoreSummary(),
+  RouteName.testbeforeplaypage.toString(): (context) => TestBeforePlayPage(),
 };
