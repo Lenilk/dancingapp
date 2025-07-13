@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/components/music_card.dart';
+import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/components/videobox.dart';
 import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
@@ -19,9 +20,10 @@ class MusicSelectedPage extends StatefulWidget {
 class _MusicSelectedPageState extends State<MusicSelectedPage> {
   final player = AudioPlayer();
   PlayerState playerState = PlayerState.disposed;
-  Future setSourcePlayer(int? musicnumber) async {
+  Future setSourcePlayer(int? musicnumber, double? range) async {
+    debugPrint("Music Selected Page : $musicnumber , $range");
     await player.setReleaseMode(ReleaseMode.stop);
-    await player.setPlaybackRate(1.00);
+    await player.setPlaybackRate(range ?? 1);
     await player.setSource(
       AssetSource('audio/${music_file_list[musicnumber ?? 0]}.m4a'),
     );
@@ -31,6 +33,13 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
         setState(() => playerState = s);
       }
     });
+  }
+
+  int? musicnumber;
+  double? dificultrange;
+  @override
+  void initState() {
+    super.initState();
   }
 
   bool isPlay = false;
@@ -43,8 +52,9 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
 
   @override
   Widget build(BuildContext context) {
-    int? musicnumber = context.read<MusicProvider>().musicnumber_selected;
-    setSourcePlayer(musicnumber);
+    musicnumber = context.read<MusicProvider>().musicnumber_selected;
+    dificultrange = context.read<MusicProvider>().difficult_range;
+    setSourcePlayer(musicnumber, dificultrange);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -52,7 +62,7 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (musicnumber != null && musicnumber < 3 && musicnumber > -1)
+              if (musicnumber != null && musicnumber! < 3 && musicnumber! > -1)
                 Flexible(
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
@@ -65,7 +75,7 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
                       aspectRatio: 16 / 9,
                       child: Image(
                         image: AssetImage(
-                          "assets/picture/${music_file_list[musicnumber]}.png",
+                          "assets/picture/${music_file_list[musicnumber!]}.png",
                         ),
                       ),
                     ),
@@ -77,16 +87,7 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Provider.of<MusicProvider>(
-                        context,
-                        listen: false,
-                      ).deleteMusicSelect();
-                      goBack(context);
-                    },
-                    child: GeneralText(data: 'กลับ'),
-                  ),
+                  goBackButton(() {}, "กลับ", context),
                   PlayerControllerButton(player: player, state: playerState),
                   ElevatedButton(
                     onPressed: () {

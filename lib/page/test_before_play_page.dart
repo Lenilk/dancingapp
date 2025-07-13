@@ -1,4 +1,5 @@
 import 'package:danceteaching/components/general_text.dart';
+import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/components/pad_button_group.dart';
 import 'package:danceteaching/components/status_pad_group.dart';
 import 'package:danceteaching/utils/navitor_utils.dart';
@@ -63,15 +64,7 @@ class _TestBeforePlayPageState extends State<TestBeforePlayPage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: GeneralText(data: "เมณู"),
-                ),
-              ],
+              children: [SizedBox(), goBackButton(null, "กลับ", context)],
             ),
           ],
         ),
