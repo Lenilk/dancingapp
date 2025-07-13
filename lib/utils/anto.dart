@@ -1,8 +1,8 @@
 import "dart:convert";
 
+import "package:danceteaching/utils/anto.key.dart";
 import "package:http/http.dart" as http;
 
-String antokey = "";
 Future<String> readRelayStateFromAnto(
   http.Client thishttp,
   String chanel,
