@@ -21,12 +21,15 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
   PlayerState playerState = PlayerState.disposed;
   Future setSourcePlayer(int? musicnumber) async {
     await player.setReleaseMode(ReleaseMode.stop);
+    await player.setPlaybackRate(1.00);
     await player.setSource(
       AssetSource('audio/${music_file_list[musicnumber ?? 0]}.m4a'),
     );
     player.onPlayerStateChanged.listen((PlayerState s) {
       debugPrint('Current player state: $s');
-      setState(() => playerState = s);
+      if (mounted) {
+        setState(() => playerState = s);
+      }
     });
   }
 
@@ -34,6 +37,7 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
   @override
   void dispose() {
     player.release();
+    player.dispose();
     super.dispose();
   }
 
