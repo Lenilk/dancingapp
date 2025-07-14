@@ -61,7 +61,7 @@ class MusicMainPage extends StatelessWidget {
                         goPage(context, RouteName.difficultselectpage);
                       }
                     },
-                    child: GeneralText(data: 'เลือกความยาก'),
+                    child: GeneralText(data: 'ระดับความเร็ว'),
                   ),
                 ],
               ),

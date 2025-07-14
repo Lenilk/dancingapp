@@ -24,7 +24,7 @@ class TutorialPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: GeneralText(data: "เมณู"),
+                    child: GeneralText(data: "เมนู"),
                   ),
                 ],
               ),

@@ -37,7 +37,7 @@ class ScoreSummary extends StatelessWidget {
                         (route) => false,
                       );
                     },
-                    child: GeneralText(data: 'เมณู'),
+                    child: GeneralText(data: 'เมนู'),
                   ),
                 ],
               ),
