@@ -20,7 +20,7 @@ class MusicProvider extends ChangeNotifier {
   void selectDifficult(int difficultnum) {
     debugPrint(difficultnum.toString());
     music_difficult_number_selected = difficultnum;
-    if (difficultnum != 3) {
+    if (difficultnum != 2) {
       difficult_range = difficult_music[difficultnum];
     }
   }

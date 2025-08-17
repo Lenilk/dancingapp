@@ -1,7 +1,7 @@
 List<String> music_name = [
-  "เพลงหญิงไทยใจงาม",
   "เพลงคือนเดือนหงาย",
+  "เพลงหญิงไทยใจงาม",
   "เพลงดวงจันทร์ขวัญฟ้า",
 ];
 
-List<double> difficult_music = [0.8, 1, 1.20];
+List<double> difficult_music = [1, 1.20];

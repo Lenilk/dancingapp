@@ -2,6 +2,7 @@ import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
+import 'package:danceteaching/utils/anto.dart';
 import 'package:danceteaching/utils/navitor_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,11 +43,10 @@ class _DifficultSelectPageState extends State<DifficultSelectPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 20,
             children: [
-              difficultButton(() {}, "ง่าย", 0),
-              difficultButton(() {}, "ปกติ", 1),
-              difficultButton(() {}, "ยาก", 2),
-              difficultButton(() {}, "เลือกเอง", 3),
-              if (difficult == 3)
+              difficultButton(() {}, "ปกติ", 0),
+              difficultButton(() {}, "ยาก", 1),
+              difficultButton(() {}, "เลือกเอง", 2),
+              if (difficult == 2)
                 Column(
                   children: [
                     Text("${range.toStringAsFixed(2)}x"),
@@ -78,16 +78,25 @@ class _DifficultSelectPageState extends State<DifficultSelectPage> {
                     context,
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (difficult != null) {
                         context.read<MusicProvider>().selectDifficult(
                           difficult ?? 1,
                         );
-                        if (difficult == 3) {
+
+                        if (difficult == 2) {
                           context.read<MusicProvider>().setDifficultRange(
                             range,
                           );
                         }
+                        if (difficult != 2) {
+                          await writeSpeedStateToAnto(
+                            difficult_music[difficult ?? 1],
+                          );
+                        } else {
+                          await writeSpeedStateToAnto(range);
+                        }
+
                         goPage(context, RouteName.musicselectedpage);
                       }
                     },

@@ -1,5 +1,6 @@
 import 'package:danceteaching/components/general_text.dart';
 import 'package:danceteaching/services/music_provider.dart';
+import 'package:danceteaching/utils/anto.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ class MusicCard extends StatelessWidget {
                 : null,
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
+          await writeSongStateToAnto(index + 1);
           Provider.of<MusicProvider>(context, listen: false).select(index);
         },
         child: Padding(
