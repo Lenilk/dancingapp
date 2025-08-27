@@ -22,6 +22,8 @@ class MusicSelectedPage extends StatefulWidget {
 
 class _MusicSelectedPageState extends State<MusicSelectedPage> {
   final player = AudioPlayer();
+
+  bool finished = false;
   PlayerState playerState = PlayerState.disposed;
   Future setSourcePlayer(int? musicnumber, double? range) async {
     debugPrint("Music Selected Page : $musicnumber , $range");
@@ -104,14 +106,33 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
                   PlayerControllerButton(player: player, state: playerState),
                   ElevatedButton(
                     onPressed: () async {
-                      await writeStartStateToAnto(0);
-                      if (Provider.of<MusicProvider>(
-                            context,
-                            listen: false,
-                          ).musicnumber_selected !=
-                          null) {
-                        goBack(context);
-                        goPage(context, RouteName.scoresummarypage);
+                      debugPrint(player.state.toString());
+                      if (player.state == PlayerState.completed) {
+                        await writeStartStateToAnto(0);
+
+                        if (Provider.of<MusicProvider>(
+                              context,
+                              listen: false,
+                            ).musicnumber_selected !=
+                            null) {
+                          goBack(context);
+                          goPage(context, RouteName.scoresummarypage);
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "ไม่สามารถสรุปผลคะแนนได้ โปรดเล่นให้จบ",
+                              style: TextStyle(
+                                fontSize: 26,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w200,
+                              ),
+                            ),
+                            duration: Duration(seconds: 2),
+                            backgroundColor: Colors.blue[100],
+                          ),
+                        );
                       }
                     },
                     child: GeneralText(data: 'สรุป'),
@@ -288,14 +309,33 @@ class _MusicSelectedLandscapePageState
                   PlayerControllerButton(player: player, state: playerState),
                   ElevatedButton(
                     onPressed: () async {
-                      await writeStartStateToAnto(0);
-                      if (Provider.of<MusicProvider>(
-                            context,
-                            listen: false,
-                          ).musicnumber_selected !=
-                          null) {
-                        goBack(context);
-                        goPage(context, RouteName.scoresummarypage);
+                      debugPrint(player.state.toString());
+                      if (player.state == PlayerState.completed) {
+                        await writeStartStateToAnto(0);
+
+                        if (Provider.of<MusicProvider>(
+                              context,
+                              listen: false,
+                            ).musicnumber_selected !=
+                            null) {
+                          goBack(context);
+                          goPage(context, RouteName.scoresummarypage);
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "ไม่สามารถสรุปผลคะแนนได้ โปรดเล่นให้จบ",
+                              style: TextStyle(
+                                fontSize: 26,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w200,
+                              ),
+                            ),
+                            duration: Duration(seconds: 2),
+                            backgroundColor: Colors.blue[100],
+                          ),
+                        );
                       }
                     },
                     child: GeneralText(data: 'สรุป'),
