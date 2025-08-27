@@ -72,7 +72,7 @@ class _MusicSelectedPageState extends State<MusicSelectedPage> {
                       minHeight: 90,
                       minWidth: 60,
                       maxHeight: 360,
-                      maxWidth: 720,
+                      maxWidth: 640,
                     ),
                     child: AspectRatio(
                       aspectRatio: 16 / 9,

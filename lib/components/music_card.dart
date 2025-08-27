@@ -22,7 +22,6 @@ class MusicCard extends StatelessWidget {
           ),
         ),
         onPressed: () async {
-          await writeSongStateToAnto(index + 1);
           Provider.of<MusicProvider>(context, listen: false).select(index);
         },
         child: Padding(

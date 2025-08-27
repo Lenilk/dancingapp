@@ -3,6 +3,7 @@ import 'package:danceteaching/components/music_card.dart';
 import 'package:danceteaching/components/navigation_util_widget.dart';
 import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
+import 'package:danceteaching/utils/anto.dart';
 import 'package:danceteaching/utils/navitor_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,12 +53,13 @@ class MusicMainPage extends StatelessWidget {
                     context,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      if (Provider.of<MusicProvider>(
-                            context,
-                            listen: false,
-                          ).musicnumber_selected !=
-                          null) {
+                    onPressed: () async {
+                      int? selected_music = Provider.of<MusicProvider>(
+                        context,
+                        listen: false,
+                      ).musicnumber_selected;
+                      if (selected_music != null) {
+                        await writeSongStateToAnto(selected_music + 1);
                         goPage(context, RouteName.difficultselectpage);
                       }
                     },

@@ -8,85 +8,98 @@ Future<String> readRelayStateFromAnto(
   http.Client thishttp,
   String chanel,
 ) async {
-  String thing = "Relay";
-  final res = await thishttp.get(
-    Uri.parse("https://api.anto.io/channel/get/$antokey/$thing/$chanel"),
-  );
-  if (res.statusCode == 200) {
-    return (jsonDecode(res.body) as Map<String, dynamic>)["value"];
-  } else {
-    return "error";
+  try {
+    String thing = "Relay";
+    final res = await thishttp.get(
+      Uri.parse("https://api.anto.io/channel/get/$antokey/$thing/$chanel"),
+    );
+    if (res.statusCode == 200) {
+      return (jsonDecode(res.body) as Map<String, dynamic>)["value"];
+    } else {
+      return "error";
+    }
+  } catch (e) {
+    debugPrint("error");
+    return "0";
   }
 }
 
-Future<bool> writeRelayDataToAnto(
+Future writeRelayDataToAnto(
   http.Client thishttp,
   String chanel,
   String data,
 ) async {
-  String thing = "Relay";
-  final res = await thishttp.get(
-    Uri.parse("https://api.anto.io/channel/set/$antokey/$thing/$chanel/$data"),
-  );
-  if (res.statusCode == 200) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-Future<String> readSwitchStateFromAnto(
-  http.Client thishttp,
-  String chanel,
-) async {
-  final res = await thishttp.get(
-    Uri.parse("https://api.anto.io/channel/get/$antokey/Switch/$chanel"),
-  );
-  if (res.statusCode == 200) {
-    return (jsonDecode(res.body) as Map<String, dynamic>)["value"];
-  } else {
+  try {
+    String thing = "Relay";
+    final res = await thishttp.get(
+      Uri.parse(
+        "https://api.anto.io/channel/set/$antokey/$thing/$chanel/$data",
+      ),
+    );
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    debugPrint("error");
     return "error";
   }
 }
 
 Future writeStartStateToAnto(int isStart) async {
-  final res = await http.get(
-    Uri.parse(
-      "https://api.anto.io/channel/set/$antokey/Relay/isStart/$isStart",
-    ),
-  );
-
-  if (res.statusCode == 200) {
-    debugPrint(
-      "value write is start ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+  try {
+    final res = await http.get(
+      Uri.parse(
+        "https://api.anto.io/channel/set/$antokey/Relay/isStart/$isStart",
+      ),
     );
-  } else {
+
+    if (res.statusCode == 200) {
+      debugPrint(
+        "value write is start ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+      );
+    } else {
+      debugPrint("error");
+    }
+  } catch (e) {
     debugPrint("error");
+    return "error";
   }
 }
 
 Future writeSongStateToAnto(int song) async {
-  final res = await http.get(
-    Uri.parse("https://api.anto.io/channel/set/$antokey/Relay/song/$song"),
-  );
-  if (res.statusCode == 200) {
-    debugPrint(
-      "value write is song ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+  try {
+    final res = await http.get(
+      Uri.parse("https://api.anto.io/channel/set/$antokey/Relay/song/$song"),
     );
-  } else {
+    if (res.statusCode == 200) {
+      debugPrint(
+        "value write is song ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+      );
+    } else {
+      debugPrint("error");
+    }
+  } catch (e) {
     debugPrint("error");
+    return "error";
   }
 }
 
 Future writeSpeedStateToAnto(double speed) async {
-  final res = await http.get(
-    Uri.parse("https://api.anto.io/channel/set/$antokey/Relay/speed/$speed"),
-  );
-  if (res.statusCode == 200) {
-    debugPrint(
-      "value write is speed ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+  try {
+    final res = await http.get(
+      Uri.parse("https://api.anto.io/channel/set/$antokey/Relay/speed/$speed"),
     );
-  } else {
+    if (res.statusCode == 200) {
+      debugPrint(
+        "value write is speed ${(jsonDecode(res.body) as Map<String, dynamic>)["value"]}",
+      );
+    } else {
+      debugPrint("error");
+    }
+  } catch (e) {
     debugPrint("error");
+    return "error";
   }
 }
