@@ -30,13 +30,20 @@ class _PadButtonGroupState extends State<PadButtonGroup> {
           readRelayStateFromAnto(readhttp, "sw6"),
         ])
         .then(
-          (val) => setState(() {
-            value = val;
-          }),
+          (val) => {
+            if (mounted)
+              {
+                setState(() {
+                  value = val;
+                }),
+              },
+          },
         )
         .whenComplete(() {
           debugPrint(value.toString());
-          setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
           debugPrint("Fetch api");
         });
   }
@@ -51,8 +58,6 @@ class _PadButtonGroupState extends State<PadButtonGroup> {
     debugPrint(value.toString());
   }
 
-  Timer? timer;
-
   @override
   void initState() {
     super.initState();
@@ -61,7 +66,6 @@ class _PadButtonGroupState extends State<PadButtonGroup> {
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
   }
 

@@ -21,47 +21,8 @@ class _TestBeforePlayPageState extends State<TestBeforePlayPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LayoutBuilder(
-              builder: (context, BoxConstraints size) {
-                if (MediaQuery.of(context).size.height >
-                    MediaQuery.of(context).size.width) {
-                  return Column(
-                    children: [
-                      StatusPadGroup(
-                        isActive: [false, false, false, false, false, false],
-                      ),
-                      SizedBox(height: 40),
-
-                      PadButtonGroup(),
-                      SizedBox(height: 10),
-                    ],
-                  );
-                } else {
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          StatusPadGroup(
-                            isActive: [
-                              false,
-                              false,
-                              false,
-                              false,
-                              false,
-                              false,
-                            ],
-                          ),
-                          SizedBox(width: 40),
-                          PadButtonGroup(),
-                        ],
-                      ),
-                      SizedBox(height: 5),
-                    ],
-                  );
-                }
-              },
-            ),
+            PadButtonGroup(),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [SizedBox(), goBackButton(null, "กลับ", context)],

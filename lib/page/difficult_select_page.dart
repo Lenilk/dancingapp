@@ -17,6 +17,7 @@ class DifficultSelectPage extends StatefulWidget {
 class _DifficultSelectPageState extends State<DifficultSelectPage> {
   int? difficult = null;
   double range = 1;
+  bool isclicked = false;
   Widget difficultButton(VoidCallback fn, String text, int index) {
     return ElevatedButton(
       style: ButtonStyle(
@@ -43,9 +44,27 @@ class _DifficultSelectPageState extends State<DifficultSelectPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 20,
             children: [
-              difficultButton(() {}, "ปกติ", 0),
-              difficultButton(() {}, "ยาก", 1),
-              difficultButton(() {}, "เลือกเอง", 2),
+              difficultButton(
+                () {
+                  isclicked = false;
+                },
+                "ปกติ",
+                0,
+              ),
+              difficultButton(
+                () {
+                  isclicked = false;
+                },
+                "ยาก",
+                1,
+              ),
+              difficultButton(
+                () {
+                  isclicked = false;
+                },
+                "เลือกเอง",
+                2,
+              ),
               if (difficult == 2)
                 Column(
                   children: [
@@ -60,6 +79,7 @@ class _DifficultSelectPageState extends State<DifficultSelectPage> {
                         onChanged: (value) {
                           setState(() {
                             range = value;
+                            isclicked = false;
                           });
                         },
                       ),
@@ -98,6 +118,27 @@ class _DifficultSelectPageState extends State<DifficultSelectPage> {
                         }
 
                         goPage(context, RouteName.musicselectedpage);
+                      } else {
+                        if (!isclicked) {
+                          isclicked = true;
+                          debugPrint("Click");
+                        } else {
+                          return;
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "โปรดเลือกระดับความยาก",
+                              style: TextStyle(
+                                fontSize: 26,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w200,
+                              ),
+                            ),
+                            duration: Duration(seconds: 2),
+                            backgroundColor: Colors.blue[100],
+                          ),
+                        );
                       }
                     },
                     child: GeneralText(data: 'เล่น'),

@@ -7,7 +7,13 @@ import 'package:provider/provider.dart';
 class MusicCard extends StatelessWidget {
   final String name;
   final int index;
-  const MusicCard({super.key, required this.name, required this.index});
+  final Function fn;
+  const MusicCard({
+    super.key,
+    required this.name,
+    required this.index,
+    required this.fn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class MusicCard extends StatelessWidget {
         ),
         onPressed: () async {
           Provider.of<MusicProvider>(context, listen: false).select(index);
+          fn();
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),

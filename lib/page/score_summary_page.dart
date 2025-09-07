@@ -8,6 +8,7 @@ import 'package:danceteaching/data/music.dart';
 import 'package:danceteaching/services/music_provider.dart';
 import 'package:danceteaching/utils/anto.dart';
 import 'package:danceteaching/utils/anto.key.dart';
+import 'package:danceteaching/utils/music_utils.dart';
 import 'package:danceteaching/utils/navitor_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,8 +57,10 @@ class _ScoreSummaryState extends State<ScoreSummary> {
     fetchScore();
   }
 
+  int? musicnumber = 0;
   @override
   Widget build(BuildContext context) {
+    musicnumber = context.read<MusicProvider>().musicnumber_selected;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -72,7 +75,10 @@ class _ScoreSummaryState extends State<ScoreSummary> {
                   children: [
                     SummaryText(data: "สรุป"),
                     SizedBox(height: 40),
-                    SummaryText(data: "$score/10"),
+                    SummaryText(
+                      data:
+                          "${((score / allrhythmsong[musicnumber ?? 0]) * 10).round().toInt()}/10",
+                    ),
                   ],
                 )
               else if (state == "fail")

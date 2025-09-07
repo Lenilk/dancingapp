@@ -26,7 +26,8 @@ enum RouteName {
 
 Map<String, Widget Function(BuildContext)> route = {
   RouteName.homepage.toString(): (context) => HomePage(),
-  RouteName.musicselectedpage.toString(): (context) => MusicSelectedRootPage(),
+  RouteName.musicselectedpage.toString(): (context) =>
+      MusicSelectedLandscapePage(),
   RouteName.musicmainpage.toString(): (context) => MusicMainPage(),
   RouteName.tutorialpage.toString(): (context) => TutorialPage(),
   RouteName.scoresummarypage.toString(): (context) => ScoreSummary(),

@@ -8,8 +8,15 @@ import 'package:danceteaching/utils/navitor_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MusicMainPage extends StatelessWidget {
+class MusicMainPage extends StatefulWidget {
   const MusicMainPage({super.key});
+
+  @override
+  State<MusicMainPage> createState() => _MusicMainPageState();
+}
+
+class _MusicMainPageState extends State<MusicMainPage> {
+  bool isclicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,15 @@ class MusicMainPage extends StatelessWidget {
                   itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return MusicCard(name: music_name[index], index: index);
+                    return MusicCard(
+                      name: music_name[index],
+                      index: index,
+                      fn: () {
+                        setState(() {
+                          isclicked = false;
+                        });
+                      },
+                    );
                   },
                 ),
               ),
@@ -59,8 +74,29 @@ class MusicMainPage extends StatelessWidget {
                         listen: false,
                       ).musicnumber_selected;
                       if (selected_music != null) {
-                        await writeSongStateToAnto(selected_music + 1);
+                        writeSongStateToAnto(selected_music + 1);
                         goPage(context, RouteName.difficultselectpage);
+                      } else {
+                        if (!isclicked) {
+                          isclicked = true;
+                          debugPrint("Click");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "โปรดเลือกเพลง",
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                              ),
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.blue[100],
+                            ),
+                          );
+                        } else {
+                          return;
+                        }
                       }
                     },
                     child: GeneralText(data: 'ระดับความเร็ว'),
